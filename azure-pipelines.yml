@@ -32,7 +32,9 @@ steps:
     make xbuild-all
   displayName: 'Cross Compile'
 
-- script: |
-    AZURE_STORAGE_CONNECTION_STRING=$(AZURE_STORAGE_CONNECTION_STRING) make publish
-  displayName: 'Publish'
+- displayName: 'Publish'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  script: |
+    make publish
+  env:
+    GITHUB_TOKEN: $(GITHUB_TOKEN)
